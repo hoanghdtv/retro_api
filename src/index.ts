@@ -62,18 +62,18 @@ app.get("/", async (req: Request, res: Response) =>{
     if(checkIpAddress(ip)){
         let user = await handleIP(ip);
         if(user != null){
-          res.send({success:"false", ip: user.ip, isp: user.isp, countryCode: user.countryCode});  
+          res.send({success:false, ip: user.ip, isp: user.isp, countryCode: user.countryCode});  
         } else{
-          res.send({success:"true"}); 
+          res.send({success:true}); 
         }
     }
     else{
-      res.send({success:"true",error: "ip_invalid"});
+      res.send({success:true,error: "ip_invalid"});
     }
 
   } catch(err) {
       console.log(err);
-      res.send({success:"true"});
+      res.send({success:true});
   }
 
   
