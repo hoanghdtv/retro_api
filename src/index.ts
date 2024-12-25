@@ -90,6 +90,7 @@ async function handleIP(ip: string) {
       const url = (process.env.IP_CHECK_URL || "http://ip-api.com/json/") + ip;
       const response = await fetch(url);
       const obj = await response.json();
+      console.log(JSON.stringify(obj));
       
       var user = new User({
         ip:ip,
