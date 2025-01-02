@@ -2,7 +2,6 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-
 dotenv.config();
 
 const app: Express = express();
@@ -56,9 +55,10 @@ interface IPQuery {
    ip:string
 }
 
+app.set('trust proxy', true);
 app.get("/", async (req: Request, res: Response) =>{
   try {
-    let ip = req.ip as string;
+    let ip:string  = getRequestIpAddress(req)as string;
     console.log(ip);
     if(checkIpAddress(ip)){
         let user = await handleIP(ip);
@@ -79,6 +79,15 @@ app.get("/", async (req: Request, res: Response) =>{
 
   
 });
+
+const getRequestIpAddress = (request: Request) => {
+  const requestIpAddress = (request.headers['X-Forwarded-For'] || request.connection.remoteAddress) as string
+  if (!requestIpAddress) return null
+  const ipv4 = new RegExp("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")
+  let ipAddress:string = requestIpAddress.match(ipv4)?.toString() as string;
+  return ipAddress
+}
+
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at ${port}`);
