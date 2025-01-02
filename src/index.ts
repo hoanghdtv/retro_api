@@ -59,7 +59,7 @@ app.set('trust proxy', true);
 app.get("/", async (req: Request, res: Response) =>{
   try {
     let ip:string  = getRequestIpAddress(req)as string;
-    console.log(ip);
+    //console.log(ip);
     if(checkIpAddress(ip)){
         let user = await handleIP(ip);
         if(user != null){
