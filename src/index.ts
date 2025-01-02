@@ -58,7 +58,8 @@ interface IPQuery {
 
 app.get("/", async (req: Request, res: Response) =>{
   try {
-    const {ip} = req.query as unknown as IPQuery;
+    let ip = req.ip as string;
+    console.log(ip);
     if(checkIpAddress(ip)){
         let user = await handleIP(ip);
         if(user != null){
