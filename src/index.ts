@@ -66,6 +66,7 @@ app.get("/", async (req: Request, res: Response) =>{
           res.send({success:false, ip: user.ip, isp: user.isp, countryCode: user.countryCode});  
         } else{
           res.send({success:true}); 
+          
         }
     }
     else{
@@ -100,7 +101,7 @@ async function handleIP(ip: string) {
       const url = (process.env.IP_CHECK_URL || "http://ip-api.com/json/") + ip;
       const response = await fetch(url);
       const obj = await response.json();
-      //console.log(JSON.stringify(obj));
+      
       
       var user = new User({
         ip:ip,
@@ -116,6 +117,7 @@ async function handleIP(ip: string) {
           await user.save();
           return user;
       } else {
+        console.log(JSON.stringify(obj));
           return null;
       }
   } else {
