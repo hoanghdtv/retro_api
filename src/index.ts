@@ -117,7 +117,7 @@ async function handleIP(ip: string) {
           await user.save();
           return user;
       } else {
-        console.log(JSON.stringify(obj));
+        // console.log(JSON.stringify(obj));
           return null;
       }
   } else {
